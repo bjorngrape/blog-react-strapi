@@ -24,6 +24,10 @@
     },
     "published_at": {
       "type": "date"
+    },
+    "category": {
+      "model": "category",
+      "via": "articles"
     }
   }
 }

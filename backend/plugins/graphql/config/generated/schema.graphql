@@ -6,6 +6,7 @@ type Article {
   content: String
   image: UploadFile
   published_at: DateTime
+  category: Category
 }
 
 input ArticleInput {
@@ -13,6 +14,21 @@ input ArticleInput {
   content: String
   image: ID
   published_at: DateTime
+  category: ID
+}
+
+"""category"""
+type Category {
+  id: ID!
+  created_at: DateTime!
+  updated_at: DateTime!
+  name: String
+  articles(sort: String, limit: Int, start: Int, where: JSON): [Article]
+}
+
+input CategoryInput {
+  name: String
+  articles: [ID]
 }
 
 input createArticleInput {
@@ -21,6 +37,14 @@ input createArticleInput {
 
 type createArticlePayload {
   article: Article
+}
+
+input createCategoryInput {
+  data: CategoryInput
+}
+
+type createCategoryPayload {
+  category: Category
 }
 
 input createRoleInput {
@@ -52,6 +76,14 @@ type deleteArticlePayload {
   article: Article
 }
 
+input deleteCategoryInput {
+  where: InputID
+}
+
+type deleteCategoryPayload {
+  category: Category
+}
+
 input deleteRoleInput {
   where: InputID
 }
@@ -73,6 +105,12 @@ input editArticleInput {
   content: String
   image: ID
   published_at: DateTime
+  category: ID
+}
+
+input editCategoryInput {
+  name: String
+  articles: [ID]
 }
 
 input editFileInput {
@@ -132,12 +170,15 @@ scalar JSON
 """The `Long` scalar type represents 52-bit integers"""
 scalar Long
 
-union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Article | createArticlePayload | updateArticlePayload | deleteArticlePayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
+union Morph = UsersPermissionsMe | UsersPermissionsMeRole | Article | createArticlePayload | updateArticlePayload | deleteArticlePayload | Category | createCategoryPayload | updateCategoryPayload | deleteCategoryPayload | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | createRolePayload | updateRolePayload | deleteRolePayload | UsersPermissionsUser | createUserPayload | updateUserPayload | deleteUserPayload
 
 type Mutation {
   createArticle(input: createArticleInput): createArticlePayload
   updateArticle(input: updateArticleInput): updateArticlePayload
   deleteArticle(input: deleteArticleInput): deleteArticlePayload
+  createCategory(input: createCategoryInput): createCategoryPayload
+  updateCategory(input: updateCategoryInput): updateCategoryPayload
+  deleteCategory(input: deleteCategoryInput): deleteCategoryPayload
 
   """Create a new role"""
   createRole(input: createRoleInput): createRolePayload
@@ -162,6 +203,8 @@ type Mutation {
 type Query {
   article(id: ID!): Article
   articles(sort: String, limit: Int, start: Int, where: JSON): [Article]
+  category(id: ID!): Category
+  categories(sort: String, limit: Int, start: Int, where: JSON): [Category]
   files(sort: String, limit: Int, start: Int, where: JSON): [UploadFile]
   role(id: ID!): UsersPermissionsRole
 
@@ -189,6 +232,15 @@ input updateArticleInput {
 
 type updateArticlePayload {
   article: Article
+}
+
+input updateCategoryInput {
+  where: InputID
+  data: editCategoryInput
+}
+
+type updateCategoryPayload {
+  category: Category
 }
 
 input updateRoleInput {
