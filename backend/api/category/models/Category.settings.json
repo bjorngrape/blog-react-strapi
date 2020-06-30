@@ -3,7 +3,7 @@
   "collectionName": "categories",
   "info": {
     "name": "category",
-    "description": "category"
+    "description": ""
   },
   "options": {
     "increments": true,
@@ -12,7 +12,8 @@
   },
   "attributes": {
     "name": {
-      "type": "text"
+      "type": "text",
+      "unique": true
     },
     "articles": {
       "collection": "article",

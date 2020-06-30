@@ -17,7 +17,6 @@ input ArticleInput {
   category: ID
 }
 
-"""category"""
 type Category {
   id: ID!
   created_at: DateTime!
