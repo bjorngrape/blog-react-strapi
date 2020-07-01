@@ -1,4 +1,4 @@
-// This is the app
+// This is the app :)
 
 import React from "react";
 
@@ -7,6 +7,7 @@ import { Switch, Route } from "react-router-dom"; // using the Switch and Route 
 import Nav from "../../components/Nav"; // import and declare Nav component in our App so it will show on every pages of our application 
 import Articles from "../Articles"; // import and declare Articles container
 import Article from "../Article";
+import Category from "../Category";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Switch>
         <Route path="/" component={Articles} exact />
         <Route path="/article/:id" component={Article} exact />
+        <Route path="/category/:id" component={Category} exact />
       </Switch>
     </div>
   );
